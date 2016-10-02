@@ -1,17 +1,30 @@
 var React = require('react');
+var ArticleStore = require('../stores/articleStore');
+var ApiUtil = require('../util/apiUtil');
 
-module.exports = React.createClass({
+var Main = React.createClass({
 
   getInitialState: function () {
-    return {};
+    return (this.getStateFromStore());
+  },
+
+  getStateFromStore: function () {
+    return ({
+      articles: ArticleStore.all()
+    });
+  },
+
+  _onChange: function () {
+    this.setState(this.getStateFromStore());
   },
 
   componentDidMount: function () {
-
+    this.articleStoreToken = ArticleStore.addListener(this._onChange);
+    ApiUtil.loadJSONarticles('./data/articles.json');
   },
 
   componentWillUnmount: function () {
-
+    this.articleStoreToken.remove();
   },
 
   render: function () {
@@ -22,3 +35,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = Main;

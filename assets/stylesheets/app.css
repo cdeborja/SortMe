@@ -1,0 +1,28 @@
+html, body, header, nav, h1, a, ul, li, h3,
+strong, main, section, img, div, h2, p,
+form, fieldset, label, input, textarea,
+button, article, footer, small {
+  padding: 0;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  z-index: 0;
+
+  font: inherit;
+  color: inherit;
+  text-decoration: inherit;
+  text-align: inherit;
+  vertical-align: inherit;
+  background: transparent;
+}
+
+ul {
+  list-style: none;
+}
+
+/* --- CLEARFIX --- */
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
