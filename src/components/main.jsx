@@ -10,7 +10,7 @@ var Main = React.createClass({
 
   getStateFromStore: function () {
     return ({
-      articles: ArticleStore.all()
+      articles: ArticleStore.displayArticles()
     });
   },
 
@@ -28,9 +28,16 @@ var Main = React.createClass({
   },
 
   render: function () {
+    if (this.state.articles.length === 0) { return (<div>LOADING ARTICLES...</div>);}
+    var articles = this.state.articles.map( function (article, idx) {
+      return (<div key={idx}>
+        {article.title}
+        </div>
+      );
+    });
     return (
       <div>
-        Got to main.js
+        {articles}
       </div>
     );
   }

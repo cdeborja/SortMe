@@ -21439,7 +21439,7 @@
 	
 	  getStateFromStore: function () {
 	    return {
-	      articles: ArticleStore.all()
+	      articles: ArticleStore.displayArticles()
 	    };
 	  },
 	
@@ -21457,10 +21457,24 @@
 	  },
 	
 	  render: function () {
+	    if (this.state.articles.length === 0) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'LOADING ARTICLES...'
+	      );
+	    }
+	    var articles = this.state.articles.map(function (article, idx) {
+	      return React.createElement(
+	        'div',
+	        { key: idx },
+	        article.title
+	      );
+	    });
 	    return React.createElement(
 	      'div',
 	      null,
-	      'Got to main.js'
+	      articles
 	    );
 	  }
 	});
@@ -21477,17 +21491,32 @@
 	var ArticleStore = new Store(AppDispatcher);
 	var ArticleActions = __webpack_require__(191);
 	
-	var articles = {};
+	var articleList = [];
+	var visibleArticles = [];
 	
-	ArticleStore.all = function () {};
+	ArticleStore.displayArticles = function () {
+	  return visibleArticles;
+	};
 	
 	ArticleStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case ArticleConstants.LOADARTICLES:
+	    case ArticleConstants.INITIAL_ARTICLES_LOADED:
+	      cacheArticles(payload.articles);
 	      ArticleStore.__emitChange();
 	      break;
 	  }
 	};
+	
+	function getTenMoreArticles() {
+	  if (articleList.length >= visibleArticles.length) {
+	    visibleArticles = visibleArticles.concat(articleList.slice(0, 10));
+	  }
+	}
+	
+	function cacheArticles(articles) {
+	  articleList = articleList.concat(articles);
+	  getTenMoreArticles();
+	}
 	
 	module.exports = ArticleStore;
 
@@ -23066,7 +23095,7 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-	  LOADARTICLES: "LOADARTICLES"
+	  INITIAL_ARTICLES_LOADED: "INITIAL_ARTICLES_LOADED"
 	};
 
 /***/ },
@@ -23076,7 +23105,14 @@
 	var Dispatcher = __webpack_require__(187);
 	var ArticleConstants = __webpack_require__(190);
 	
-	var ArticleActions = {};
+	var ArticleActions = {
+	  receiveInitialArticles: function (articles) {
+	    Dispatcher.dispatch({
+	      actionType: ArticleConstants.INITIAL_ARTICLES_LOADED,
+	      articles: articles
+	    });
+	  }
+	};
 	
 	module.exports = ArticleActions;
 
@@ -23093,7 +23129,7 @@
 	    xhr.open('GET', path, true);
 	    xhr.onreadystatechange = function () {
 	      if (xhr.readyState === 4) {
-	        console.log(JSON.parse(xhr.responseText));
+	        ArticleActions.receiveInitialArticles(JSON.parse(xhr.responseText));
 	      }
 	    };
 	    xhr.send(null);

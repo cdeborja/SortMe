@@ -7,7 +7,7 @@ var ApiUtil = {
   xhr.open('GET', path, true);
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
-      console.log(JSON.parse(xhr.responseText));
+    ArticleActions.receiveInitialArticles(JSON.parse(xhr.responseText));
     }
   };
   xhr.send(null);
