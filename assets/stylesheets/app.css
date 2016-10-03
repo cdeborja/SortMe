@@ -26,3 +26,12 @@ ul {
   display: block;
   clear: both;
 }
+
+.header-container {
+  border: 1px solid black;
+}
+
+.header-container > p {
+  float: left;
+  border: 1px solid red;
+}

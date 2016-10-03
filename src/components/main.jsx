@@ -2,6 +2,8 @@ var React = require('react');
 var ArticleStore = require('../stores/articleStore');
 var ApiUtil = require('../util/apiUtil');
 
+var Header = require('./header');
+
 var Main = React.createClass({
 
   getInitialState: function () {
@@ -37,6 +39,7 @@ var Main = React.createClass({
     });
     return (
       <div>
+        <Header />
         {articles}
       </div>
     );

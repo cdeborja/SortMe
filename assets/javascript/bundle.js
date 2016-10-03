@@ -21429,6 +21429,8 @@
 	var ArticleStore = __webpack_require__(173);
 	var ApiUtil = __webpack_require__(192);
 	
+	var Header = __webpack_require__(194);
+	
 	var Main = React.createClass({
 	  displayName: 'Main',
 	
@@ -21474,6 +21476,7 @@
 	    return React.createElement(
 	      'div',
 	      null,
+	      React.createElement(Header, null),
 	      articles
 	    );
 	  }
@@ -23137,6 +23140,54 @@
 	};
 	
 	module.exports = ApiUtil;
+
+/***/ },
+/* 193 */,
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var Header = React.createClass({
+	  displayName: "Header",
+	
+	  componentDidMount: function () {},
+	
+	  componentWillUnmount: function () {},
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      null,
+	      React.createElement(
+	        "header",
+	        { className: "header-container group" },
+	        React.createElement(
+	          "p",
+	          null,
+	          "Unpublished Articles"
+	        ),
+	        React.createElement(
+	          "p",
+	          null,
+	          "Author"
+	        ),
+	        React.createElement(
+	          "p",
+	          null,
+	          "Words"
+	        ),
+	        React.createElement(
+	          "p",
+	          null,
+	          "Submitted"
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = Header;
 
 /***/ }
 /******/ ]);
