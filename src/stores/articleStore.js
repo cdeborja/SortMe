@@ -10,8 +10,12 @@ var articleList = [];
 var visibleArticles = [];
 var page = 0;
 
-ArticleStore.displayArticles = function() {
+ArticleStore.displayArticles = function () {
   return visibleArticles;
+};
+
+ArticleStore.getCurrentTotal = function () {
+  return visibleArticles.length;
 };
 
 ArticleStore.__onDispatch = function (payload) {

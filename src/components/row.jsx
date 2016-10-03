@@ -3,7 +3,7 @@ var React = require('react');
 var Row = React.createClass({
   render: function () {
     return(
-      <div className="row-container">
+      <div className="row-container group">
         <div className="main-row">
           <img src={this.props.img} alt={this.props.img} className="icon" />
           <a href={this.props.url} className="article-title">

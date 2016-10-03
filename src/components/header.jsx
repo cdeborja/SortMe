@@ -1,4 +1,5 @@
 var React = require('react');
+var ArticleStore = require('../stores/articleStore');
 
 var Header = React.createClass({
   componentDidMount: function () {
@@ -13,10 +14,20 @@ var Header = React.createClass({
     return (
       <div>
         <header className="header-container group">
-          <p>Unpublished Articles</p>
-          <p>Author</p>
-          <p>Words</p>
-          <p>Submitted</p>
+          <div className="main-row">
+            <p>Unpublished Articles ({ArticleStore.getCurrentTotal()})</p>
+          </div>
+          <div className="sub-row-index">
+            <p className="sub-row">
+              Author
+            </p>
+            <p className="sub-row">
+              Words
+            </p>
+            <p className="sub-row">
+              Submitted
+            </p>
+          </div>
         </header>
       </div>
     );

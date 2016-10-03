@@ -42,7 +42,7 @@ var Main = React.createClass({
       );
     });
     return (
-      <div>
+      <div className="main-container">
         <Header />
         {articles}
         <div onClick={this.loadMoreArticles}>GET MORE ARTICLES</div>

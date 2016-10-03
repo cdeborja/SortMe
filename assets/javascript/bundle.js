@@ -21477,7 +21477,7 @@
 	    });
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'main-container' },
 	      React.createElement(Header, null),
 	      articles,
 	      React.createElement(
@@ -21509,6 +21509,10 @@
 	
 	ArticleStore.displayArticles = function () {
 	  return visibleArticles;
+	};
+	
+	ArticleStore.getCurrentTotal = function () {
+	  return visibleArticles.length;
 	};
 	
 	ArticleStore.__onDispatch = function (payload) {
@@ -23173,9 +23177,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var ArticleStore = __webpack_require__(173);
 	
 	var Header = React.createClass({
-	  displayName: "Header",
+	  displayName: 'Header',
 	
 	  componentDidMount: function () {},
 	
@@ -23183,30 +23188,40 @@
 	
 	  render: function () {
 	    return React.createElement(
-	      "div",
+	      'div',
 	      null,
 	      React.createElement(
-	        "header",
-	        { className: "header-container group" },
+	        'header',
+	        { className: 'header-container group' },
 	        React.createElement(
-	          "p",
-	          null,
-	          "Unpublished Articles"
+	          'div',
+	          { className: 'main-row' },
+	          React.createElement(
+	            'p',
+	            null,
+	            'Unpublished Articles (',
+	            ArticleStore.getCurrentTotal(),
+	            ')'
+	          )
 	        ),
 	        React.createElement(
-	          "p",
-	          null,
-	          "Author"
-	        ),
-	        React.createElement(
-	          "p",
-	          null,
-	          "Words"
-	        ),
-	        React.createElement(
-	          "p",
-	          null,
-	          "Submitted"
+	          'div',
+	          { className: 'sub-row-index' },
+	          React.createElement(
+	            'p',
+	            { className: 'sub-row' },
+	            'Author'
+	          ),
+	          React.createElement(
+	            'p',
+	            { className: 'sub-row' },
+	            'Words'
+	          ),
+	          React.createElement(
+	            'p',
+	            { className: 'sub-row' },
+	            'Submitted'
+	          )
 	        )
 	      )
 	    );
@@ -23255,7 +23270,7 @@
 	  render: function () {
 	    return React.createElement(
 	      "div",
-	      { className: "row-container" },
+	      { className: "row-container group" },
 	      React.createElement(
 	        "div",
 	        { className: "main-row" },
