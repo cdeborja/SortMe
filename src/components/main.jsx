@@ -3,6 +3,7 @@ var ArticleStore = require('../stores/articleStore');
 var ApiUtil = require('../util/apiUtil');
 
 var Header = require('./header');
+var RowContainer = require('./row_container');
 
 var Main = React.createClass({
 
@@ -29,18 +30,19 @@ var Main = React.createClass({
     this.articleStoreToken.remove();
   },
 
+  
+
   render: function () {
     if (this.state.articles.length === 0) { return (<div>LOADING ARTICLES...</div>);}
-    var articles = this.state.articles.map( function (article, idx) {
-      return (<div key={idx}>
-        {article.title}
-        </div>
+    var articles = this.state.articles.map( function (article) {
+      return (<RowContainer article={article} key={article.id} />
       );
     });
     return (
       <div>
         <Header />
         {articles}
+        <div>GET MORE ARTICLES</div>
       </div>
     );
   }

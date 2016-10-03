@@ -35,3 +35,13 @@ ul {
   float: left;
   border: 1px solid red;
 }
+
+.icon {
+  object-fit: cover;
+  width: 45px;
+  height: 45px;
+}
+
+.row-container {
+  border: 1px solid green;
+}

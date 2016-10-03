@@ -21430,6 +21430,7 @@
 	var ApiUtil = __webpack_require__(192);
 	
 	var Header = __webpack_require__(194);
+	var RowContainer = __webpack_require__(195);
 	
 	var Main = React.createClass({
 	  displayName: 'Main',
@@ -21466,18 +21467,19 @@
 	        'LOADING ARTICLES...'
 	      );
 	    }
-	    var articles = this.state.articles.map(function (article, idx) {
-	      return React.createElement(
-	        'div',
-	        { key: idx },
-	        article.title
-	      );
+	    var articles = this.state.articles.map(function (article) {
+	      return React.createElement(RowContainer, { article: article, key: article.id });
 	    });
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(Header, null),
-	      articles
+	      articles,
+	      React.createElement(
+	        'div',
+	        null,
+	        'GET MORE ARTICLES'
+	      )
 	    );
 	  }
 	});
@@ -23188,6 +23190,82 @@
 	});
 	
 	module.exports = Header;
+
+/***/ },
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var Row = __webpack_require__(196);
+	
+	var RowContainer = React.createClass({
+	  displayName: 'RowContainer',
+	
+	  render: function () {
+	    var singleArticle = this.props.article;
+	    if (singleArticle.length === 0) {
+	      return React.createElement('div', null);
+	    }
+	    return React.createElement(Row, {
+	      img: singleArticle.image,
+	      url: singleArticle.url,
+	      title: singleArticle.title,
+	      author: singleArticle.profile.first_name + " " + singleArticle.profile.last_name,
+	      wordCount: singleArticle.words,
+	      published: singleArticle.publish_at
+	    });
+	  }
+	});
+	
+	module.exports = RowContainer;
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var Row = React.createClass({
+	  displayName: "Row",
+	
+	  render: function () {
+	    return React.createElement(
+	      "div",
+	      { className: "row-container" },
+	      React.createElement(
+	        "div",
+	        { className: "main-row" },
+	        React.createElement("img", { src: this.props.img, alt: this.props.img, className: "icon" }),
+	        React.createElement(
+	          "a",
+	          { href: this.props.url, className: "article-title" },
+	          this.props.title
+	        )
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "sub-row-index" },
+	        React.createElement(
+	          "p",
+	          { className: "sub-row" },
+	          this.props.author
+	        ),
+	        React.createElement(
+	          "p",
+	          { className: "sub-row" },
+	          this.props.wordCount
+	        ),
+	        React.createElement(
+	          "p",
+	          { className: "sub-row" },
+	          this.props.published
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = Row;
 
 /***/ }
 /******/ ]);
