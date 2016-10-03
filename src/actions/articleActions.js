@@ -4,7 +4,7 @@ var ArticleConstants = require('../constants/articleConstants');
 var ArticleActions = {
   receiveInitialArticles: function (articles) {
     Dispatcher.dispatch({
-      actionType: ArticleConstants.INITIAL_ARTICLES_LOADED,
+      actionType: ArticleConstants.ARTICLES_LOADED,
       articles: articles
     });
   },

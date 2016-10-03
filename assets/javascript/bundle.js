@@ -21501,6 +21501,8 @@
 	var ArticleStore = new Store(AppDispatcher);
 	var ArticleActions = __webpack_require__(191);
 	
+	var ApiUtil = __webpack_require__(192);
+	
 	var articleList = [];
 	var visibleArticles = [];
 	var page = 0;
@@ -21511,12 +21513,11 @@
 	
 	ArticleStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case ArticleConstants.INITIAL_ARTICLES_LOADED:
+	    case ArticleConstants.ARTICLES_LOADED:
 	      cacheArticles(payload.articles);
 	      ArticleStore.__emitChange();
 	      break;
 	    case ArticleConstants.LOAD_MORE_ARTICLES:
-	      page++;
 	      getTenMoreArticles();
 	      ArticleStore.__emitChange();
 	      break;
@@ -21527,8 +21528,11 @@
 	  var total = articleList.length;
 	  var start = page * 10;
 	  var end = (page + 1) * 10;
-	  if (total >= visibleArticles.length) {
+	  if (total === visibleArticles.length) {
+	    ApiUtil.loadJSONarticles('./data/more-articles.json');
+	  } else if (total >= visibleArticles.length) {
 	    visibleArticles = visibleArticles.concat(articleList.slice(start, end));
+	    page++;
 	  }
 	}
 	
@@ -23114,7 +23118,7 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-	  INITIAL_ARTICLES_LOADED: "INITIAL_ARTICLES_LOADED",
+	  ARTICLES_LOADED: "ARTICLES_LOADED",
 	  LOAD_MORE_ARTICLES: "LOAD_MORE_ARTICLES"
 	};
 
@@ -23128,7 +23132,7 @@
 	var ArticleActions = {
 	  receiveInitialArticles: function (articles) {
 	    Dispatcher.dispatch({
-	      actionType: ArticleConstants.INITIAL_ARTICLES_LOADED,
+	      actionType: ArticleConstants.ARTICLES_LOADED,
 	      articles: articles
 	    });
 	  },
