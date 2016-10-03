@@ -1,5 +1,6 @@
 var React = require('react');
 var ArticleStore = require('../stores/articleStore');
+var ArticleActions = require('../actions/articleActions');
 var ApiUtil = require('../util/apiUtil');
 
 var Header = require('./header');
@@ -30,7 +31,9 @@ var Main = React.createClass({
     this.articleStoreToken.remove();
   },
 
-  
+  loadMoreArticles: function () {
+    ArticleActions.loadMoreArticles();
+  },
 
   render: function () {
     if (this.state.articles.length === 0) { return (<div>LOADING ARTICLES...</div>);}
@@ -42,7 +45,7 @@ var Main = React.createClass({
       <div>
         <Header />
         {articles}
-        <div>GET MORE ARTICLES</div>
+        <div onClick={this.loadMoreArticles}>GET MORE ARTICLES</div>
       </div>
     );
   }

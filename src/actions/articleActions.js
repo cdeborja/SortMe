@@ -7,6 +7,11 @@ var ArticleActions = {
       actionType: ArticleConstants.INITIAL_ARTICLES_LOADED,
       articles: articles
     });
+  },
+  loadMoreArticles: function () {
+    Dispatcher.dispatch({
+      actionType: ArticleConstants.LOAD_MORE_ARTICLES
+    });
   }
 };
 

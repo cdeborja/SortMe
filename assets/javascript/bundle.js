@@ -21427,6 +21427,7 @@
 
 	var React = __webpack_require__(1);
 	var ArticleStore = __webpack_require__(173);
+	var ArticleActions = __webpack_require__(191);
 	var ApiUtil = __webpack_require__(192);
 	
 	var Header = __webpack_require__(194);
@@ -21459,6 +21460,10 @@
 	    this.articleStoreToken.remove();
 	  },
 	
+	  loadMoreArticles: function () {
+	    ArticleActions.loadMoreArticles();
+	  },
+	
 	  render: function () {
 	    if (this.state.articles.length === 0) {
 	      return React.createElement(
@@ -21477,7 +21482,7 @@
 	      articles,
 	      React.createElement(
 	        'div',
-	        null,
+	        { onClick: this.loadMoreArticles },
 	        'GET MORE ARTICLES'
 	      )
 	    );
@@ -21498,6 +21503,7 @@
 	
 	var articleList = [];
 	var visibleArticles = [];
+	var page = 0;
 	
 	ArticleStore.displayArticles = function () {
 	  return visibleArticles;
@@ -21509,12 +21515,20 @@
 	      cacheArticles(payload.articles);
 	      ArticleStore.__emitChange();
 	      break;
+	    case ArticleConstants.LOAD_MORE_ARTICLES:
+	      page++;
+	      getTenMoreArticles();
+	      ArticleStore.__emitChange();
+	      break;
 	  }
 	};
 	
 	function getTenMoreArticles() {
-	  if (articleList.length >= visibleArticles.length) {
-	    visibleArticles = visibleArticles.concat(articleList.slice(0, 10));
+	  var total = articleList.length;
+	  var start = page * 10;
+	  var end = (page + 1) * 10;
+	  if (total >= visibleArticles.length) {
+	    visibleArticles = visibleArticles.concat(articleList.slice(start, end));
 	  }
 	}
 	
@@ -23100,7 +23114,8 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-	  INITIAL_ARTICLES_LOADED: "INITIAL_ARTICLES_LOADED"
+	  INITIAL_ARTICLES_LOADED: "INITIAL_ARTICLES_LOADED",
+	  LOAD_MORE_ARTICLES: "LOAD_MORE_ARTICLES"
 	};
 
 /***/ },
@@ -23115,6 +23130,11 @@
 	    Dispatcher.dispatch({
 	      actionType: ArticleConstants.INITIAL_ARTICLES_LOADED,
 	      articles: articles
+	    });
+	  },
+	  loadMoreArticles: function () {
+	    Dispatcher.dispatch({
+	      actionType: ArticleConstants.LOAD_MORE_ARTICLES
 	    });
 	  }
 	};
