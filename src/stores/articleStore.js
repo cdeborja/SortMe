@@ -34,6 +34,14 @@ ArticleStore.getCurrentTotal = function () {
   return visibleArticles.length;
 };
 
+ArticleStore.sortedBy = function () {
+  return lastSortedBy;
+};
+
+ArticleStore.orderedBy = function () {
+  return orderBy;
+};
+
 ArticleStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case ArticleConstants.ARTICLES_LOADED:

@@ -21524,6 +21524,14 @@
 	  return visibleArticles.length;
 	};
 	
+	ArticleStore.sortedBy = function () {
+	  return lastSortedBy;
+	};
+	
+	ArticleStore.orderedBy = function () {
+	  return orderBy;
+	};
+	
 	ArticleStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case ArticleConstants.ARTICLES_LOADED:
@@ -23260,11 +23268,55 @@
 	var Header = React.createClass({
 	  displayName: 'Header',
 	
-	  componentDidMount: function () {},
 	
-	  componentWillUnmount: function () {},
+	  getInitialState: function () {
+	    return {
+	      sortBy: ArticleStore.sortedBy(),
+	      orderBy: ArticleStore.orderedBy()
+	    };
+	  },
+	
+	  getStateFromStore: function () {
+	    this.setState({
+	      sortBy: ArticleStore.sortedBy(),
+	      orderBy: ArticleStore.orderedBy()
+	    });
+	  },
+	
+	  componentDidMount: function () {
+	    this.articleStoreToken = ArticleStore.addListener(this.getStateFromStore);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.articleStoreToken.remove();
+	  },
 	
 	  render: function () {
+	
+	    var countArrow = "";
+	    var dateArrow = "";
+	    var authorArrow = "";
+	
+	    if (this.state.sortBy === "count") {
+	      if (this.state.orderBy === "up") {
+	        countArrow = "arrow-up";
+	      } else {
+	        countArrow = "arrow-down";
+	      }
+	    } else if (this.state.sortBy === "date") {
+	      if (this.state.orderBy === "up") {
+	        dateArrow = "arrow-up";
+	      } else {
+	        dateArrow = "arrow-down";
+	      }
+	    } else if (this.state.sortBy === "author") {
+	      if (this.state.orderBy === "up") {
+	        authorArrow = "arrow-up";
+	      } else {
+	        authorArrow = "arrow-down";
+	      }
+	    }
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -23286,19 +23338,22 @@
 	          'div',
 	          { className: 'sub-row-index' },
 	          React.createElement(
-	            'p',
-	            { className: 'sub-row' },
-	            'Author'
+	            'div',
+	            { className: 'sub-row col' },
+	            'Author',
+	            React.createElement('div', { className: authorArrow })
 	          ),
 	          React.createElement(
-	            'p',
-	            { className: 'sub-row', onClick: ArticleActions.sortByWordCount },
-	            'Words'
+	            'div',
+	            { className: 'sub-row col', onClick: ArticleActions.sortByWordCount },
+	            'Words',
+	            React.createElement('div', { className: countArrow })
 	          ),
 	          React.createElement(
-	            'p',
-	            { className: 'sub-row', onClick: ArticleActions.sortBySubmitted },
-	            'Submitted'
+	            'div',
+	            { className: 'sub-row col', onClick: ArticleActions.sortBySubmitted },
+	            'Submitted',
+	            React.createElement('div', { className: dateArrow })
 	          )
 	        )
 	      )

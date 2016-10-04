@@ -97,11 +97,17 @@ body {
   width: 90px;
   height: auto;
   text-align: center;
+  position: relative;
 }
 
 .col {
   padding: 20px 10px;
 }
+
+.col:hover {
+  cursor: pointer;
+}
+
 
 .icon {
   margin-right: 10px;
@@ -134,4 +140,28 @@ body {
 
 .row-container {
   border: 1px solid #cccccc;
+}
+
+.arrow-up {
+  bottom: 5px;
+  position: absolute;
+  transform: translateX(50%);
+  right: 50%;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #FFFFFF;
+}
+
+.arrow-down {
+  bottom: 5px;
+  position: absolute;
+  transform: translateX(50%);
+  right: 50%;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #FFFFFF;
 }
