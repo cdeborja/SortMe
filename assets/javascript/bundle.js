@@ -21504,7 +21504,7 @@
 	var orderBy = localStorage.getItem('orderBy') || 'up';
 	
 	ArticleStore.displayArticles = function () {
-	  if (sorted || visibleArticles.length === 0) {
+	  if (sorted) {
 	    return visibleArticles;
 	  }
 	  var sortBy;
@@ -23469,17 +23469,17 @@
 	        'div',
 	        { className: 'sub-row-index' },
 	        React.createElement(
-	          'p',
-	          { className: 'sub-row aut-color' },
+	          'div',
+	          { className: 'sub-row aut-color group' },
 	          this.props.author
 	        ),
 	        React.createElement(
-	          'p',
+	          'div',
 	          { className: 'sub-row' },
 	          this.props.wordCount
 	        ),
 	        React.createElement(
-	          'p',
+	          'div',
 	          { className: 'sub-row' },
 	          timeAgo
 	        )

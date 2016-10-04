@@ -14,15 +14,15 @@ var Row = React.createClass({
           </a>
         </div>
         <div className="sub-row-index">
-          <p className="sub-row aut-color">
+          <div className="sub-row aut-color group">
             {this.props.author}
-          </p>
-          <p className="sub-row">
+          </div>
+          <div className="sub-row">
             {this.props.wordCount}
-          </p>
-          <p className="sub-row">
+          </div>
+          <div className="sub-row">
             {timeAgo}
-          </p>
+          </div>
         </div>
       </div>);
   }

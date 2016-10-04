@@ -74,6 +74,12 @@ body {
   text-decoration: underline;
 }
 
+.row-container {
+  /*display: flex;*/
+  border: 1px solid #cccccc;
+  border-top: 0;
+}
+
 .row-container:nth-child(2n+1) {
   background-color: #f4f4f4;
 }
@@ -82,25 +88,27 @@ body {
   background-color: #f8f8f8;
 }
 
-.sub-row-index {
-  display: inline-flex;
+.row-container, .sub-row-index {
+  display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
   position: relative;
-  font-size: 12px;
 }
 
 .sub-row {
-  border-left: 1px solid #000000;
-  padding: 20px 10px;
+  font-size: 12px;
+  display: block;
+  border-left: 1px solid #CCCCCC;
+  padding: 0px 10px;
   width: 90px;
-  height: auto;
   text-align: center;
   position: relative;
+  height: inherit;
 }
 
 .col {
+  border-left: 1px solid #852b39;
   padding: 20px 10px;
 }
 
@@ -136,10 +144,6 @@ body {
 .load-button:hover {
   cursor: pointer;
   background: #DDDDDD;
-}
-
-.row-container {
-  border: 1px solid #cccccc;
 }
 
 .arrow-up {

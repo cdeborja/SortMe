@@ -14,7 +14,7 @@ var lastSortedBy = localStorage.getItem('lastSortedBy') || 'none';
 var orderBy = localStorage.getItem('orderBy') || 'up';
 
 ArticleStore.displayArticles = function () {
-  if (sorted || visibleArticles.length === 0) {
+  if (sorted) {
     return visibleArticles;
   }
   var sortBy;
