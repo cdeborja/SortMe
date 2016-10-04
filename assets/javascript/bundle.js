@@ -21551,11 +21551,7 @@
 	        lastSortedBy = 'count';
 	        orderBy = 'down';
 	      } else {
-	        if (orderBy === 'up') {
-	          orderBy = 'down';
-	        } else {
-	          orderBy = 'up';
-	        }
+	        toggleOrder();
 	      }
 	      ArticleStore.__emitChange();
 	      break;
@@ -21565,11 +21561,7 @@
 	        lastSortedBy = 'date';
 	        orderBy = 'down';
 	      } else {
-	        if (orderBy === 'up') {
-	          orderBy = 'down';
-	        } else {
-	          orderBy = 'up';
-	        }
+	        toggleOrder();
 	      }
 	      ArticleStore.__emitChange();
 	      break;
@@ -21579,11 +21571,7 @@
 	        lastSortedBy = 'author';
 	        orderBy = 'down';
 	      } else {
-	        if (orderBy === 'up') {
-	          orderBy = 'down';
-	        } else {
-	          orderBy = 'up';
-	        }
+	        toggleOrder();
 	      }
 	      ArticleStore.__emitChange();
 	      break;
@@ -21612,6 +21600,10 @@
 	    visibleArticles = visibleArticles.concat(articleList.slice(start, end));
 	    page++;
 	  }
+	}
+	
+	function toggleOrder() {
+	  orderBy = orderBy === 'up' ? 'down' : 'up';
 	}
 	
 	function cacheArticles(articles) {
