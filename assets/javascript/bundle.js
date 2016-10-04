@@ -21549,7 +21549,7 @@
 	      sorted = false;
 	      if (lastSortedBy !== 'count') {
 	        lastSortedBy = 'count';
-	        orderBy = 'up';
+	        orderBy = 'down';
 	      } else {
 	        if (orderBy === 'up') {
 	          orderBy = 'down';
@@ -21563,7 +21563,7 @@
 	      sorted = false;
 	      if (lastSortedBy !== 'date') {
 	        lastSortedBy = 'date';
-	        orderBy = 'up';
+	        orderBy = 'down';
 	      } else {
 	        if (orderBy === 'up') {
 	          orderBy = 'down';
@@ -21577,7 +21577,7 @@
 	      sorted = false;
 	      if (lastSortedBy !== 'author') {
 	        lastSortedBy = 'author';
-	        orderBy = 'up';
+	        orderBy = 'down';
 	      } else {
 	        if (orderBy === 'up') {
 	          orderBy = 'down';
