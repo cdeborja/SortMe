@@ -21584,7 +21584,7 @@
 	      ArticleStore.__emitChange();
 	      break;
 	  }
-	  // sets up initial conditions for sorting
+	  // sets up initial conditions for sorting when returning to page
 	  localStorage.setItem('lastSortedBy', lastSortedBy);
 	  localStorage.setItem('orderBy', orderBy);
 	};
@@ -37905,7 +37905,7 @@
 	
 	  displayButton: function () {
 	    // In production, would not have a strict number of 60
-	    if (ArticleStore.getCurrentTotal() === 60) {
+	    if (ArticleStore.getCurrentTotal() >= 60) {
 	      return React.createElement(
 	        'div',
 	        { className: 'no-more' },

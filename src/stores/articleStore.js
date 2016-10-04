@@ -94,7 +94,7 @@ ArticleStore.__onDispatch = function (payload) {
       ArticleStore.__emitChange();
       break;
   }
-  // sets up initial conditions for sorting
+  // sets up initial conditions for sorting when returning to page
   localStorage.setItem('lastSortedBy', lastSortedBy);
   localStorage.setItem('orderBy', orderBy);
 };
