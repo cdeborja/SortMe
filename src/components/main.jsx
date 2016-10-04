@@ -5,6 +5,7 @@ var ApiUtil = require('../util/apiUtil');
 
 var Header = require('./header');
 var RowContainer = require('./row_container');
+var Footer = require('./footer');
 
 var Main = React.createClass({
 
@@ -31,10 +32,6 @@ var Main = React.createClass({
     this.articleStoreToken.remove();
   },
 
-  loadMoreArticles: function () {
-    ArticleActions.loadMoreArticles();
-  },
-
   render: function () {
     if (this.state.articles.length === 0) { return (<div>LOADING ARTICLES...</div>);}
     var articles = this.state.articles.map( function (article) {
@@ -45,7 +42,7 @@ var Main = React.createClass({
       <div className="main-container">
         <Header />
         {articles}
-        <div onClick={this.loadMoreArticles}>GET MORE ARTICLES</div>
+        <Footer />
       </div>
     );
   }

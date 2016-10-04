@@ -21432,6 +21432,7 @@
 	
 	var Header = __webpack_require__(194);
 	var RowContainer = __webpack_require__(195);
+	var Footer = __webpack_require__(304);
 	
 	var Main = React.createClass({
 	  displayName: 'Main',
@@ -21460,10 +21461,6 @@
 	    this.articleStoreToken.remove();
 	  },
 	
-	  loadMoreArticles: function () {
-	    ArticleActions.loadMoreArticles();
-	  },
-	
 	  render: function () {
 	    if (this.state.articles.length === 0) {
 	      return React.createElement(
@@ -21480,11 +21477,7 @@
 	      { className: 'main-container' },
 	      React.createElement(Header, null),
 	      articles,
-	      React.createElement(
-	        'div',
-	        { onClick: this.loadMoreArticles },
-	        'GET MORE ARTICLES'
-	      )
+	      React.createElement(Footer, null)
 	    );
 	  }
 	});
@@ -37721,6 +37714,50 @@
 	    return zh_tw;
 	
 	}));
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ArticleActions = __webpack_require__(191);
+	var ArticleStore = __webpack_require__(173);
+	
+	var Footer = React.createClass({
+	  displayName: 'Footer',
+	
+	
+	  loadMoreArticles: function () {
+	    ArticleActions.loadMoreArticles();
+	  },
+	
+	  displayButton: function () {
+	    if (ArticleStore.getCurrentTotal() === 60) {
+	      return React.createElement(
+	        'div',
+	        { className: 'no-more' },
+	        'No more articles'
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        { className: 'load-button', onClick: this.loadMoreArticles },
+	        'Load More'
+	      );
+	    }
+	  },
+	
+	  render: function () {
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      this.displayButton()
+	    );
+	  }
+	});
+	
+	module.exports = Footer;
 
 /***/ }
 /******/ ]);
