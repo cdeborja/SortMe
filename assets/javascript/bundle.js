@@ -21515,6 +21515,8 @@
 	    sortBy = 'publish_at';
 	  } else if (lastSortedBy === 'author') {
 	    sortBy = 'profile';
+	  } else if (lastSortedBy === 'default') {
+	    sortBy = 'id';
 	  }
 	  // need to differentiate between desc and asc
 	  sortBy = orderBy === 'up' ? '-'.concat(sortBy) : sortBy;
@@ -21582,6 +21584,14 @@
 	        } else {
 	          orderBy = 'up';
 	        }
+	      }
+	      ArticleStore.__emitChange();
+	      break;
+	    case ArticleConstants.DEFAULT_SORTED:
+	      sorted = false;
+	      if (lastSortedBy !== "default") {
+	        lastSortedBy = 'default';
+	        orderBy = 'up';
 	      }
 	      ArticleStore.__emitChange();
 	      break;
@@ -23190,7 +23200,8 @@
 	  LOAD_MORE_ARTICLES: "LOAD_MORE_ARTICLES",
 	  COUNT_SORTED: "COUNT_SORTED",
 	  DATE_SORTED: "DATE_SORTED",
-	  AUTHOR_SORTED: "AUTHOR_SORTED"
+	  AUTHOR_SORTED: "AUTHOR_SORTED",
+	  DEFAULT_SORTED: "DEFAULT_SORTED"
 	};
 
 /***/ },
@@ -23225,6 +23236,11 @@
 	  sortByAuthor: function () {
 	    Dispatcher.dispatch({
 	      actionType: ArticleConstants.AUTHOR_SORTED
+	    });
+	  },
+	  sortByDefault: function () {
+	    Dispatcher.dispatch({
+	      actionType: ArticleConstants.DEFAULT_SORTED
 	    });
 	  }
 	};
@@ -23357,7 +23373,7 @@
 	        { className: 'header-container group' },
 	        React.createElement(
 	          'div',
-	          { className: 'main-row col' },
+	          { className: 'main-row col', onClick: ArticleActions.sortByDefault },
 	          React.createElement(
 	            'p',
 	            null,

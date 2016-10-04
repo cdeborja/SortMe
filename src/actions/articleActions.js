@@ -27,6 +27,11 @@ var ArticleActions = {
     Dispatcher.dispatch({
       actionType: ArticleConstants.AUTHOR_SORTED
     });
+  },
+  sortByDefault: function () {
+    Dispatcher.dispatch({
+      actionType: ArticleConstants.DEFAULT_SORTED
+    });
   }
 };
 

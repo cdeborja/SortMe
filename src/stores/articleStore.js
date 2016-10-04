@@ -25,6 +25,8 @@ ArticleStore.displayArticles = function () {
     sortBy = 'publish_at';
   } else if (lastSortedBy === 'author') {
     sortBy = 'profile';
+  } else if (lastSortedBy === 'default') {
+    sortBy = 'id';
   }
   // need to differentiate between desc and asc
   sortBy = orderBy === 'up' ? '-'.concat(sortBy) : sortBy;
@@ -92,6 +94,14 @@ ArticleStore.__onDispatch = function (payload) {
         } else {
           orderBy = 'up';
         }
+      }
+      ArticleStore.__emitChange();
+      break;
+    case ArticleConstants.DEFAULT_SORTED:
+      sorted = false;
+      if (lastSortedBy !== "default") {
+        lastSortedBy = 'default';
+        orderBy = 'up';
       }
       ArticleStore.__emitChange();
       break;

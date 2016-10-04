@@ -55,7 +55,7 @@ var Header = React.createClass({
     return (
       <div>
         <header className="header-container group">
-          <div className="main-row col">
+          <div className="main-row col" onClick={ArticleActions.sortByDefault}>
             <p>Unpublished Articles ({ArticleStore.getCurrentTotal()})</p>
           </div>
           <div className="sub-row-index">
