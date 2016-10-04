@@ -10,11 +10,11 @@ var articleList = [];
 var visibleArticles = [];
 var page = 0;
 var sorted = false;
-var lastSortedBy = window.sessionStorage.getItem('lastSortedBy') || 'none';
-var orderBy = window.sessionStorage.getItem('orderBy') || 'up';
+var lastSortedBy = localStorage.getItem('lastSortedBy') || 'none';
+var orderBy = localStorage.getItem('orderBy') || 'up';
 
 ArticleStore.displayArticles = function () {
-  if (sorted) {
+  if (sorted || visibleArticles.length === 0) {
     return visibleArticles;
   }
 
@@ -25,7 +25,6 @@ ArticleStore.displayArticles = function () {
   } else if (lastSortedBy === 'date') {
     sortBy = 'publish_at';
   }
-
   // need to differentiate between desc and asc
   sortBy = orderBy === 'up' ? '-'.concat(sortBy) : sortBy;
   return ApiUtil.sortArticles(visibleArticles, sortBy);
@@ -75,8 +74,8 @@ ArticleStore.__onDispatch = function (payload) {
       break;
   }
   // sets up initial conditions for sorting
-  window.sessionStorage.setItem('lastSortedBy', lastSortedBy);
-  window.sessionStorage.setItem('orderBy', orderBy);
+  localStorage.setItem('lastSortedBy', lastSortedBy);
+  localStorage.setItem('orderBy', orderBy);
 };
 
 function getTenMoreArticles () {
