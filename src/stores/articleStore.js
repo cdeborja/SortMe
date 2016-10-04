@@ -10,12 +10,17 @@ var articleList = [];
 var visibleArticles = [];
 var page = 0;
 var sorted = false;
+var lastSortedBy = window.sessionStorage.getItem('lastSortedBy') || 'none';
+var orderBy = window.sessionStorage.getItem('orderBy') || 'up';
 
 ArticleStore.displayArticles = function () {
-  // if (sorted) {
-  //   return visibleArticles;
-  // }
+  if (sorted) {
+    return visibleArticles;
+  }
+
+  var sortBy;
   sorted = true;
+
   return ApiUtil.sortArticles(visibleArticles);
 };
 
@@ -34,10 +39,14 @@ ArticleStore.__onDispatch = function (payload) {
       ArticleStore.__emitChange();
       break;
     case ArticleConstants.COUNT_SORTED:
+      sorted = false;
       sortByWordCount();
       ArticleStore.__emitChange();
       break;
   }
+  // sets up initial conditions for sorting
+  window.sessionStorage.setItem('lastSortedBy', lastSortedBy);
+  window.sessionStorage.setItem('orderBy', orderBy);
 };
 
 function getTenMoreArticles () {
@@ -51,10 +60,6 @@ function getTenMoreArticles () {
     page++;
   }
 }
-
-// function sortByWordCount () {
-//
-// }
 
 function cacheArticles (articles) {
   articleList = articleList.concat(articles);
