@@ -21499,9 +21499,14 @@
 	var articleList = [];
 	var visibleArticles = [];
 	var page = 0;
+	var sorted = false;
 	
 	ArticleStore.displayArticles = function () {
-	  return visibleArticles;
+	  // if (sorted) {
+	  //   return visibleArticles;
+	  // }
+	  sorted = true;
+	  return ApiUtil.sortArticles(visibleArticles);
 	};
 	
 	ArticleStore.getCurrentTotal = function () {
@@ -21518,6 +21523,10 @@
 	      getTenMoreArticles();
 	      ArticleStore.__emitChange();
 	      break;
+	    case ArticleConstants.COUNT_SORTED:
+	      sortByWordCount();
+	      ArticleStore.__emitChange();
+	      break;
 	  }
 	};
 	
@@ -21532,6 +21541,10 @@
 	    page++;
 	  }
 	}
+	
+	// function sortByWordCount () {
+	//
+	// }
 	
 	function cacheArticles(articles) {
 	  articleList = articleList.concat(articles);
@@ -23116,7 +23129,8 @@
 
 	module.exports = {
 	  ARTICLES_LOADED: "ARTICLES_LOADED",
-	  LOAD_MORE_ARTICLES: "LOAD_MORE_ARTICLES"
+	  LOAD_MORE_ARTICLES: "LOAD_MORE_ARTICLES",
+	  COUNT_SORTED: "COUNT_SORTED"
 	};
 
 /***/ },
@@ -23137,6 +23151,11 @@
 	    Dispatcher.dispatch({
 	      actionType: ArticleConstants.LOAD_MORE_ARTICLES
 	    });
+	  },
+	  sortByWordCount: function () {
+	    Dispatcher.dispatch({
+	      actionType: ArticleConstants.COUNT_SORTED
+	    });
 	  }
 	};
 	
@@ -23149,6 +23168,7 @@
 	var ArticleActions = __webpack_require__(191);
 	
 	var ApiUtil = {
+	
 	  loadJSONarticles: function (path) {
 	    var xhr = new XMLHttpRequest();
 	    xhr.overrideMimeType('application/json');
@@ -23159,8 +23179,27 @@
 	      }
 	    };
 	    xhr.send(null);
+	  },
+	
+	  sortArticles: function (articles) {
+	    articles.sort(dataSort());
+	    return articles;
 	  }
 	};
+	
+	function dataSort() {
+	  var sortOrder = 1;
+	  var property = "words";
+	  return function compare(a, b) {
+	    var result = 0;
+	    if (a[property] < b[property]) {
+	      result = -1;
+	    } else if (a[property] > b[property]) {
+	      result = 1;
+	    }
+	    return result * sortOrder;
+	  };
+	}
 	
 	module.exports = ApiUtil;
 
@@ -23171,6 +23210,7 @@
 
 	var React = __webpack_require__(1);
 	var ArticleStore = __webpack_require__(173);
+	var ArticleActions = __webpack_require__(191);
 	
 	var Header = React.createClass({
 	  displayName: 'Header',
@@ -23207,12 +23247,12 @@
 	          ),
 	          React.createElement(
 	            'p',
-	            { className: 'sub-row' },
+	            { className: 'sub-row', onClick: ArticleActions.sortByWordCount },
 	            'Words'
 	          ),
 	          React.createElement(
 	            'p',
-	            { className: 'sub-row' },
+	            { className: 'sub-row', onClick: ArticleActions.sortBySubmitteD },
 	            'Submitted'
 	          )
 	        )
@@ -37732,6 +37772,7 @@
 	  },
 	
 	  displayButton: function () {
+	    // In production, would not have a strict number of 60
 	    if (ArticleStore.getCurrentTotal() === 60) {
 	      return React.createElement(
 	        'div',

@@ -1,5 +1,6 @@
 var React = require('react');
 var ArticleStore = require('../stores/articleStore');
+var ArticleActions = require('../actions/articleActions');
 
 var Header = React.createClass({
   componentDidMount: function () {
@@ -21,10 +22,10 @@ var Header = React.createClass({
             <p className="sub-row">
               Author
             </p>
-            <p className="sub-row">
+            <p className="sub-row" onClick={ArticleActions.sortByWordCount}>
               Words
             </p>
-            <p className="sub-row">
+            <p className="sub-row" onClick={ArticleActions.sortBySubmitteD}>
               Submitted
             </p>
           </div>

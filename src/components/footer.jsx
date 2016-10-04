@@ -9,6 +9,7 @@ var Footer = React.createClass({
   },
 
   displayButton: function () {
+    // In production, would not have a strict number of 60
     if (ArticleStore.getCurrentTotal() === 60) {
       return (<div className="no-more">No more articles</div>);
     } else {

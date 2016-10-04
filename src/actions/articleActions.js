@@ -12,6 +12,11 @@ var ArticleActions = {
     Dispatcher.dispatch({
       actionType: ArticleConstants.LOAD_MORE_ARTICLES
     });
+  },
+  sortByWordCount: function () {
+    Dispatcher.dispatch({
+      actionType: ArticleConstants.COUNT_SORTED
+    });
   }
 };
 

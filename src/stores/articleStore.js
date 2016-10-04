@@ -9,9 +9,14 @@ var ApiUtil = require('../util/apiUtil');
 var articleList = [];
 var visibleArticles = [];
 var page = 0;
+var sorted = false;
 
 ArticleStore.displayArticles = function () {
-  return visibleArticles;
+  // if (sorted) {
+  //   return visibleArticles;
+  // }
+  sorted = true;
+  return ApiUtil.sortArticles(visibleArticles);
 };
 
 ArticleStore.getCurrentTotal = function () {
@@ -21,17 +26,21 @@ ArticleStore.getCurrentTotal = function () {
 ArticleStore.__onDispatch = function (payload) {
   switch(payload.actionType) {
     case ArticleConstants.ARTICLES_LOADED:
-    cacheArticles(payload.articles);
-    ArticleStore.__emitChange();
-    break;
+      cacheArticles(payload.articles);
+      ArticleStore.__emitChange();
+      break;
     case ArticleConstants.LOAD_MORE_ARTICLES:
-    getTenMoreArticles();
-    ArticleStore.__emitChange();
-    break;
+      getTenMoreArticles();
+      ArticleStore.__emitChange();
+      break;
+    case ArticleConstants.COUNT_SORTED:
+      sortByWordCount();
+      ArticleStore.__emitChange();
+      break;
   }
 };
 
-function getTenMoreArticles() {
+function getTenMoreArticles () {
   var total = articleList.length;
   var start = (page * 10);
   var end = ((page + 1) * 10);
@@ -43,7 +52,11 @@ function getTenMoreArticles() {
   }
 }
 
-function cacheArticles(articles) {
+// function sortByWordCount () {
+//
+// }
+
+function cacheArticles (articles) {
   articleList = articleList.concat(articles);
   getTenMoreArticles();
 }
