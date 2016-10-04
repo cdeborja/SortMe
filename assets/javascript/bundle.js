@@ -21510,8 +21510,15 @@
 	
 	  var sortBy;
 	  sorted = true;
+	  if (lastSortedBy === 'count') {
+	    sortBy = 'words';
+	  } else if (lastSortedBy === 'date') {
+	    sortBy = 'publish_at';
+	  }
 	
-	  return ApiUtil.sortArticles(visibleArticles);
+	  // need to differentiate between desc and asc
+	  sortBy = orderBy === 'up' ? '-'.concat(sortBy) : sortBy;
+	  return ApiUtil.sortArticles(visibleArticles, sortBy);
 	};
 	
 	ArticleStore.getCurrentTotal = function () {
@@ -21530,7 +21537,16 @@
 	      break;
 	    case ArticleConstants.COUNT_SORTED:
 	      sorted = false;
-	      sortByWordCount();
+	      if (lastSortedBy !== 'count') {
+	        lastSortedBy = 'count';
+	        orderBy = 'up';
+	      } else {
+	        if (orderBy === 'up') {
+	          orderBy = 'down';
+	        } else {
+	          orderBy = 'up';
+	        }
+	      }
 	      ArticleStore.__emitChange();
 	      break;
 	  }
@@ -23186,15 +23202,20 @@
 	    xhr.send(null);
 	  },
 	
-	  sortArticles: function (articles) {
-	    articles.sort(dataSort());
+	  sortArticles: function (articles, sortBy) {
+	    articles.sort(dataSort(sortBy));
 	    return articles;
 	  }
 	};
 	
-	function dataSort() {
+	function dataSort(sortBy) {
 	  var sortOrder = 1;
-	  var property = "words";
+	  var property = sortBy;
+	
+	  if (sortBy[0] === '-') {
+	    sortOrder = -1;
+	    property = sortBy.slice(1);
+	  }
 	  return function compare(a, b) {
 	    var result = 0;
 	    if (a[property] < b[property]) {

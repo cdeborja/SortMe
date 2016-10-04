@@ -14,15 +14,20 @@ var ApiUtil = {
   xhr.send(null);
   },
 
-  sortArticles: function(articles) {
-    articles.sort(dataSort());
+  sortArticles: function(articles, sortBy) {
+    articles.sort(dataSort(sortBy));
     return articles;
   }
 };
 
-function dataSort () {
+function dataSort (sortBy) {
   var sortOrder = 1;
-  var property = "words";
+  var property = sortBy;
+
+  if (sortBy[0] === '-') {
+    sortOrder = -1;
+    property = sortBy.slice(1);
+  }
   return function compare(a, b) {
     var result = 0;
     if (a[property] < b[property]) {

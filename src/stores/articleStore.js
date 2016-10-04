@@ -20,8 +20,15 @@ ArticleStore.displayArticles = function () {
 
   var sortBy;
   sorted = true;
+  if (lastSortedBy === 'count') {
+    sortBy = 'words';
+  } else if (lastSortedBy === 'date') {
+    sortBy = 'publish_at';
+  }
 
-  return ApiUtil.sortArticles(visibleArticles);
+  // need to differentiate between desc and asc
+  sortBy = orderBy === 'up' ? '-'.concat(sortBy) : sortBy;
+  return ApiUtil.sortArticles(visibleArticles, sortBy);
 };
 
 ArticleStore.getCurrentTotal = function () {
@@ -40,7 +47,16 @@ ArticleStore.__onDispatch = function (payload) {
       break;
     case ArticleConstants.COUNT_SORTED:
       sorted = false;
-      sortByWordCount();
+      if (lastSortedBy !== 'count') {
+        lastSortedBy = 'count';
+        orderBy = 'up';
+      } else {
+        if (orderBy === 'up') {
+          orderBy = 'down';
+        } else {
+          orderBy = 'up';
+        }
+      }
       ArticleStore.__emitChange();
       break;
   }
