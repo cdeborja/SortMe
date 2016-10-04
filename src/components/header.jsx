@@ -25,7 +25,7 @@ var Header = React.createClass({
             <p className="sub-row" onClick={ArticleActions.sortByWordCount}>
               Words
             </p>
-            <p className="sub-row" onClick={ArticleActions.sortBySubmitteD}>
+            <p className="sub-row" onClick={ArticleActions.sortBySubmitted}>
               Submitted
             </p>
           </div>

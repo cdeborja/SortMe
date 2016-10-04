@@ -21549,6 +21549,20 @@
 	      }
 	      ArticleStore.__emitChange();
 	      break;
+	    case ArticleConstants.DATE_SORTED:
+	      sorted = false;
+	      if (lastSortedBy !== 'date') {
+	        lastSortedBy = 'date';
+	        orderBy = 'up';
+	      } else {
+	        if (orderBy === 'up') {
+	          orderBy = 'down';
+	        } else {
+	          orderBy = 'up';
+	        }
+	      }
+	      ArticleStore.__emitChange();
+	      break;
 	  }
 	  // sets up initial conditions for sorting
 	  window.sessionStorage.setItem('lastSortedBy', lastSortedBy);
@@ -23151,7 +23165,8 @@
 	module.exports = {
 	  ARTICLES_LOADED: "ARTICLES_LOADED",
 	  LOAD_MORE_ARTICLES: "LOAD_MORE_ARTICLES",
-	  COUNT_SORTED: "COUNT_SORTED"
+	  COUNT_SORTED: "COUNT_SORTED",
+	  DATE_SORTED: "DATE_SORTED"
 	};
 
 /***/ },
@@ -23176,6 +23191,11 @@
 	  sortByWordCount: function () {
 	    Dispatcher.dispatch({
 	      actionType: ArticleConstants.COUNT_SORTED
+	    });
+	  },
+	  sortBySubmitted: function () {
+	    Dispatcher.dispatch({
+	      actionType: ArticleConstants.DATE_SORTED
 	    });
 	  }
 	};
@@ -23278,7 +23298,7 @@
 	          ),
 	          React.createElement(
 	            'p',
-	            { className: 'sub-row', onClick: ArticleActions.sortBySubmitteD },
+	            { className: 'sub-row', onClick: ArticleActions.sortBySubmitted },
 	            'Submitted'
 	          )
 	        )

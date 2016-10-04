@@ -17,6 +17,11 @@ var ArticleActions = {
     Dispatcher.dispatch({
       actionType: ArticleConstants.COUNT_SORTED
     });
+  },
+  sortBySubmitted: function () {
+    Dispatcher.dispatch({
+      actionType: ArticleConstants.DATE_SORTED
+    });
   }
 };
 
