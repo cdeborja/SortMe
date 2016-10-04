@@ -30,12 +30,22 @@ function dataSort (sortBy) {
   }
   return function compare(a, b) {
     var result = 0;
-    if (a[property] < b[property]) {
-      result = -1;
-    } else if (a[property] > b[property]) {
-      result = 1;
+
+    if (property === "profile") {
+      if (a[property]["first_name"] < b[property]["first_name"]) {
+        result = -1;
+      } else if (a[property]["first_name"] > b[property]["first_name"]) {
+        result = 1;
+      }
+      return result * sortOrder;
+    } else {
+      if (a[property] < b[property]) {
+        result = -1;
+      } else if (a[property] > b[property]) {
+        result = 1;
+      }
+      return result * sortOrder;
     }
-    return result * sortOrder;
   };
 }
 

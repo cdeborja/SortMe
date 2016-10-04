@@ -21507,13 +21507,14 @@
 	  if (sorted || visibleArticles.length === 0) {
 	    return visibleArticles;
 	  }
-	
 	  var sortBy;
 	  sorted = true;
 	  if (lastSortedBy === 'count') {
 	    sortBy = 'words';
 	  } else if (lastSortedBy === 'date') {
 	    sortBy = 'publish_at';
+	  } else if (lastSortedBy === 'author') {
+	    sortBy = 'profile';
 	  }
 	  // need to differentiate between desc and asc
 	  sortBy = orderBy === 'up' ? '-'.concat(sortBy) : sortBy;
@@ -21560,6 +21561,20 @@
 	      sorted = false;
 	      if (lastSortedBy !== 'date') {
 	        lastSortedBy = 'date';
+	        orderBy = 'up';
+	      } else {
+	        if (orderBy === 'up') {
+	          orderBy = 'down';
+	        } else {
+	          orderBy = 'up';
+	        }
+	      }
+	      ArticleStore.__emitChange();
+	      break;
+	    case ArticleConstants.AUTHOR_SORTED:
+	      sorted = false;
+	      if (lastSortedBy !== 'author') {
+	        lastSortedBy = 'author';
 	        orderBy = 'up';
 	      } else {
 	        if (orderBy === 'up') {
@@ -23173,7 +23188,8 @@
 	  ARTICLES_LOADED: "ARTICLES_LOADED",
 	  LOAD_MORE_ARTICLES: "LOAD_MORE_ARTICLES",
 	  COUNT_SORTED: "COUNT_SORTED",
-	  DATE_SORTED: "DATE_SORTED"
+	  DATE_SORTED: "DATE_SORTED",
+	  AUTHOR_SORTED: "AUTHOR_SORTED"
 	};
 
 /***/ },
@@ -23203,6 +23219,11 @@
 	  sortBySubmitted: function () {
 	    Dispatcher.dispatch({
 	      actionType: ArticleConstants.DATE_SORTED
+	    });
+	  },
+	  sortByAuthor: function () {
+	    Dispatcher.dispatch({
+	      actionType: ArticleConstants.AUTHOR_SORTED
 	    });
 	  }
 	};
@@ -23245,12 +23266,22 @@
 	  }
 	  return function compare(a, b) {
 	    var result = 0;
-	    if (a[property] < b[property]) {
-	      result = -1;
-	    } else if (a[property] > b[property]) {
-	      result = 1;
+	
+	    if (property === "profile") {
+	      if (a[property]["first_name"] < b[property]["first_name"]) {
+	        result = -1;
+	      } else if (a[property]["first_name"] > b[property]["first_name"]) {
+	        result = 1;
+	      }
+	      return result * sortOrder;
+	    } else {
+	      if (a[property] < b[property]) {
+	        result = -1;
+	      } else if (a[property] > b[property]) {
+	        result = 1;
+	      }
+	      return result * sortOrder;
 	    }
-	    return result * sortOrder;
 	  };
 	}
 	
@@ -23339,7 +23370,7 @@
 	          { className: 'sub-row-index' },
 	          React.createElement(
 	            'div',
-	            { className: 'sub-row col' },
+	            { className: 'sub-row col', onClick: ArticleActions.sortByAuthor },
 	            'Author',
 	            React.createElement('div', { className: authorArrow })
 	          ),

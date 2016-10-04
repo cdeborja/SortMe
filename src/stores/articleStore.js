@@ -17,13 +17,14 @@ ArticleStore.displayArticles = function () {
   if (sorted || visibleArticles.length === 0) {
     return visibleArticles;
   }
-
   var sortBy;
   sorted = true;
   if (lastSortedBy === 'count') {
     sortBy = 'words';
   } else if (lastSortedBy === 'date') {
     sortBy = 'publish_at';
+  } else if (lastSortedBy === 'author') {
+    sortBy = 'profile';
   }
   // need to differentiate between desc and asc
   sortBy = orderBy === 'up' ? '-'.concat(sortBy) : sortBy;
@@ -70,6 +71,20 @@ ArticleStore.__onDispatch = function (payload) {
       sorted = false;
       if (lastSortedBy !== 'date') {
         lastSortedBy = 'date';
+        orderBy = 'up';
+      } else {
+        if (orderBy === 'up') {
+          orderBy = 'down';
+        } else {
+          orderBy = 'up';
+        }
+      }
+      ArticleStore.__emitChange();
+      break;
+    case ArticleConstants.AUTHOR_SORTED:
+      sorted = false;
+      if (lastSortedBy !== 'author') {
+        lastSortedBy = 'author';
         orderBy = 'up';
       } else {
         if (orderBy === 'up') {

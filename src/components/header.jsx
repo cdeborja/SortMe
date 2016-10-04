@@ -59,7 +59,7 @@ var Header = React.createClass({
             <p>Unpublished Articles ({ArticleStore.getCurrentTotal()})</p>
           </div>
           <div className="sub-row-index">
-            <div className="sub-row col">
+            <div className="sub-row col" onClick={ArticleActions.sortByAuthor}>
               Author
               <div className={authorArrow}>
               </div>

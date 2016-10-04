@@ -22,6 +22,11 @@ var ArticleActions = {
     Dispatcher.dispatch({
       actionType: ArticleConstants.DATE_SORTED
     });
+  },
+  sortByAuthor: function () {
+    Dispatcher.dispatch({
+      actionType: ArticleConstants.AUTHOR_SORTED
+    });
   }
 };
 
