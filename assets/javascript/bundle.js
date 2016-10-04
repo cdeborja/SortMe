@@ -23331,6 +23331,10 @@
 	    this.articleStoreToken.remove();
 	  },
 	
+	  toggleArrow: function () {
+	    return this.state.orderBy === "up" ? "arrow-up" : "arrow-down";
+	  },
+	
 	  render: function () {
 	
 	    var countArrow = "";
@@ -23338,23 +23342,11 @@
 	    var authorArrow = "";
 	
 	    if (this.state.sortBy === "count") {
-	      if (this.state.orderBy === "up") {
-	        countArrow = "arrow-up";
-	      } else {
-	        countArrow = "arrow-down";
-	      }
+	      countArrow = this.toggleArrow();
 	    } else if (this.state.sortBy === "date") {
-	      if (this.state.orderBy === "up") {
-	        dateArrow = "arrow-up";
-	      } else {
-	        dateArrow = "arrow-down";
-	      }
+	      dateArrow = this.toggleArrow();
 	    } else if (this.state.sortBy === "author") {
-	      if (this.state.orderBy === "up") {
-	        authorArrow = "arrow-up";
-	      } else {
-	        authorArrow = "arrow-down";
-	      }
+	      authorArrow = this.toggleArrow();
 	    }
 	
 	    return React.createElement(
