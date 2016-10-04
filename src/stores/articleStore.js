@@ -102,6 +102,7 @@ ArticleStore.__onDispatch = function (payload) {
 };
 
 function getTenMoreArticles () {
+  sorted = false;
   var total = articleList.length;
   var start = (page * 10);
   var end = ((page + 1) * 10);
