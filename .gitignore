@@ -6,5 +6,3 @@
 !/log/.keep
 /tmp
 /node_modules
-
-/.byebug_history
