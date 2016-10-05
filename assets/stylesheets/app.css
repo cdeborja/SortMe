@@ -100,11 +100,11 @@ body {
   font-size: 12px;
   display: block;
   border-left: 1px solid #CCCCCC;
-  padding: 0px 10px;
+  padding: 27px 10px;
   width: 90px;
+  height: 14px;
   text-align: center;
   position: relative;
-  height: inherit;
 }
 
 .col {
@@ -115,7 +115,6 @@ body {
 .col:hover {
   cursor: pointer;
 }
-
 
 .icon {
   margin-right: 10px;
